@@ -18,7 +18,7 @@ cd mi-app && npm install
 
 ## Cómo funciona
 
-- **Tema**: `useTheme().setTheme()` guarda la preferencia en IndexedDB y en una cookie; `app/layout.tsx` lee la cookie para pintar `<html data-theme>` sin parpadeo. Sin preferencia, daisy usa `thunder` o `thunder-dark` según el sistema.
+- **Tema**: `useTheme().setTheme()` guarda la preferencia en IndexedDB y en una cookie; `app/layout.tsx` lee la cookie para pintar `<html data-theme>` sin parpadeo. Sin preferencia, daisy usa `light` o `dark` según el sistema.
 - **PWA**: el service worker (`app/sw.ts`) solo se genera en `npm run build` (en dev está apagado). Las llamadas a `/api/` nunca se sirven desde caché; los datos offline viven en IndexedDB. Sin red, las páginas no visitadas muestran `/~offline`.
 - **Instalación**: `PWAInstallPrompt` ofrece instalar en Chrome/Edge/Android y explica "Compartir → Agregar a inicio" en iPhone. "No volver a mostrar" se guarda en IndexedDB.
 

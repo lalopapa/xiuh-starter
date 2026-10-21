@@ -49,7 +49,7 @@ export async function generateViewport(): Promise<Viewport> {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   // Con la cookie, el server pinta el tema elegido desde el primer render (sin parpadeo).
-  // Sin ella no hay data-theme y daisy usa thunder o thunder-dark según el sistema.
+  // Sin ella no hay data-theme y daisy usa light o dark según el sistema.
   const theme = await getCookieTheme();
   return (
     <html lang="es" data-theme={theme} className={`${jakarta.variable} ${sourceCode.variable}`} suppressHydrationWarning>
