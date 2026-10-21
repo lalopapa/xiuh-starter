@@ -1,8 +1,8 @@
-import { APP_DESCRIPTION, APP_NAME } from "@/config/app";
-import ThemePicker from "@/components/ui/theme-picker";
+import { APP_DESCRIPTION } from "@/config/app";
 
 const NEXT_STEPS = [
   { title: "Configura la app", body: "Nombre, base IndexedDB, temas y colores en config/app.ts." },
+  { title: "Arma el menú", body: "Agrega tus secciones en config/navigation.ts; el layout está en app/(main)/layout.tsx." },
   { title: "Cambia el logo", body: "Reemplaza public/icons/logo.svg y logo-maskable.svg, y corre npm run icons." },
   { title: "Agrega piezas", body: "npx shadcn add @xiuh/<pieza>. El catálogo está en lalopapa.github.io/xiuh-ui." },
   { title: "Guarda datos offline", body: "Agrega tus tablas a lib/db.ts y tus preferencias a lib/settings.ts." },
@@ -10,15 +10,8 @@ const NEXT_STEPS = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-10">
-      <header className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold">{APP_NAME}</h1>
-          <p className="text-base-content/70">{APP_DESCRIPTION}</p>
-        </div>
-        <ThemePicker />
-      </header>
-
+    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-6">
+      <p className="text-base-content/70">{APP_DESCRIPTION}</p>
       <ul className="grid gap-4 sm:grid-cols-2">
         {NEXT_STEPS.map(({ title, body }, i) => (
           <li key={title} className="card border border-base-300 bg-base-100">
@@ -32,6 +25,6 @@ export default function HomePage() {
           </li>
         ))}
       </ul>
-    </main>
+    </div>
   );
 }
