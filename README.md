@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# xiuh-starter
 
-## Getting Started
+Plantilla para apps nuevas de Xiuhlab: Next 15.5, daisyUI 5 con los temas de Xiuhlab, IndexedDB (Dexie) para preferencias y datos offline, y PWA instalable (Serwist).
 
-First, run the development server:
+Las piezas vienen del registro [xiuh-ui](https://lalopapa.github.io/xiuh-ui); todo lo que está en `components/`, `hooks/`, `lib/`, `config/` y `styles/` se instaló con `npx shadcn add @xiuh/…` y es tuyo para modificar.
+
+## Empezar un proyecto
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx degit lalopapa/xiuh-starter mi-app   # o "Use this template" en GitHub
+cd mi-app && npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **`config/app.ts`**: nombre, descripción, `APP_DB_NAME` y `APP_STORAGE_PREFIX` (únicos por app), temas y colores.
+2. **Logo**: reemplaza `public/icons/logo.svg` y `logo-maskable.svg` (este sin esquinas redondeadas y con el dibujo dentro del 80% central) y corre `npm run icons`.
+3. **Datos**: agrega tus tablas en `lib/db.ts` (extendiendo `SyncedEntity`) y tus preferencias en la interfaz `Settings` de `lib/settings.ts`.
+4. **Más piezas**: `npx shadcn add @xiuh/<pieza>` (catálogo en el link de arriba).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Cómo funciona
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Tema**: `useTheme().setTheme()` guarda la preferencia en IndexedDB y en una cookie; `app/layout.tsx` lee la cookie para pintar `<html data-theme>` sin parpadeo. Sin preferencia, daisy usa `thunder` o `thunder-dark` según el sistema.
+- **PWA**: el service worker (`app/sw.ts`) solo se genera en `npm run build` (en dev está apagado). Las llamadas a `/api/` nunca se sirven desde caché; los datos offline viven en IndexedDB. Sin red, las páginas no visitadas muestran `/~offline`.
+- **Instalación**: `PWAInstallPrompt` ofrece instalar en Chrome/Edge/Android y explica "Compartir → Agregar a inicio" en iPhone. "No volver a mostrar" se guarda en IndexedDB.
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Script | |
+|---|---|
+| `npm run dev` | Desarrollo (sin service worker) |
+| `npm run build && npm start` | Producción local; aquí sí se prueba la PWA |
+| `npm run icons` | Genera los PNG de `public/icons` desde los SVG |
+| `npm run typecheck` | Revisa tipos |
